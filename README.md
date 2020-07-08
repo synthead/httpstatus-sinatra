@@ -1,4 +1,4 @@
-# httpstat-sinatra
+# httpstatus-sinatra
 
 A super tiny clone of [https://httpstat.us](https://httpstat.us/) written in [Sinatra](http://sinatrarb.com)!
 
