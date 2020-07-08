@@ -2,7 +2,7 @@
 
 require "sinatra"
 
-HEADERS = { 'Content-Type' => 'text/plain' }
+HEADERS = { "Content-Type" => "text/plain" }
 
 get "/:status" do
   sleep params["sleep"].to_i
