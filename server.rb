@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
 
 require "sinatra"
+require "sinatra/multi_route"
 
 HEADERS = { "Content-Type" => "text/plain" }
 
-get "/:status" do
+get "/:status", "/:status/:sleep" do
   sleep params["sleep"].to_i
   halt params["status"].to_i, HEADERS, body_content
 end
