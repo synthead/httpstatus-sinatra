@@ -1,19 +1,15 @@
 #!/usr/bin/env ruby
 
 require "sinatra"
-require "sinatra/multi_route"
 
 HEADERS = { "Content-Type" => "text/plain" }
 
-get "/:status", "/:status/:sleep" do
-  sleep params["sleep"].to_i
-  halt params["status"].to_i, HEADERS, body_content
-end
+get %r{/(?<status_and_sleep>\d+(-\d+)?)(/.*)?} do
+  status_and_sleep = params["status_and_sleep"].split("-")
+  status_code, sleep_seconds = (0..1).map { |i| status_and_sleep[i].to_i }
 
-def body_content
-  [params["status"], status_description].compact.join(" ")
-end
+  body_content = [status_code, Rack::Utils::HTTP_STATUS_CODES[status_code]].compact.join(" ")
 
-def status_description
-  Rack::Utils::HTTP_STATUS_CODES[params["status"].to_i]
+  sleep(sleep_seconds)
+  halt(status_code, HEADERS, body_content)
 end
